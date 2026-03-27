@@ -18,7 +18,7 @@ class AgentState(TypedDict):
 # In a production app, LLM instances are created once per request or cached
 # Initialize Gemini Flash (fast and free tier available)
 llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
+    model="gemini-2.0-flash",
     temperature=0,
     google_api_key=os.getenv("GOOGLE_API_KEY", "")
 )

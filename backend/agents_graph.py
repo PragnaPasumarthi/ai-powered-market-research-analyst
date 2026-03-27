@@ -2,7 +2,7 @@ from typing import TypedDict, List, Annotated
 import operator
 import os
 from langgraph.graph import StateGraph, START, END
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage
 from tavily import TavilyClient
 
@@ -16,7 +16,12 @@ class AgentState(TypedDict):
     errors: Annotated[List[str], operator.add]
 
 # In a production app, LLM instances are created once per request or cached
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0) # gpt-4o-mini is faster/cheaper for execution
+# Initialize Gemini Flash (fast and free tier available)
+llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    temperature=0,
+    google_api_key=os.getenv("GOOGLE_API_KEY", "")
+)
 tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY", ""))
 
 # Node 1: Researcher
